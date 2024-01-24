@@ -1,0 +1,21 @@
+{
+  "name": "vk-models-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "md5": "^2.3.0",
+    "moment": "^2.30.1",
+    "vk-io": "^4.9.1"
+  },
+  "devDependencies": {
+    "@types/md5": "^2.3.5",
+    "@types/moment": "^2.13.0"
+  }
+}
