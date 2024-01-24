@@ -79,7 +79,7 @@ class Vk {
         await vk.api.wall.post({
           owner_id: -Math.abs(groupId),
           message: text,
-          // attachments: link,
+          attachments: link,
           from_group: true,
         });
       } catch (e) {
@@ -99,7 +99,7 @@ class Vk {
       const vk = pool.getClient();
 
       Vk.postAdsTask(vk);
-    }, 6 * (1 / 3) * MINUT);
+    }, (1 / 12) * MINUT);
   }
 }
 
