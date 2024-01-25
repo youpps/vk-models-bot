@@ -7,11 +7,11 @@ class Vk {
   private static async getGoodPosts(vk: VK, owner_id: number) {
     const res = await vk.api.wall.get({
       owner_id: -Math.abs(owner_id),
-      count: 1,
+      count: 2,
       filter: "all",
     });
 
-    const posts = res.items;
+    const posts = res.items.filter((post) => !post.is_pinned);
 
     const goodPosts: WallWallpostFull[] = [];
 
@@ -67,6 +67,7 @@ class Vk {
       const post = posts[0];
 
       const text = appConfig.text;
+      console.log(post);
 
       if (!post) {
         return;
