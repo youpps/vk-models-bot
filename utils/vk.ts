@@ -1,6 +1,6 @@
+import path from "path";
 import { VK } from "vk-io";
 import { WallWallpostFull } from "vk-io/lib/api/schemas/objects";
-import Messages from "./messages";
 import appConfig from "../configs/appConfig.json";
 
 class Vk {
@@ -16,8 +16,6 @@ class Vk {
     const goodPosts: WallWallpostFull[] = [];
 
     const checkPost = async (post: WallWallpostFull) => {
-      console.log(post);
-
       if (!post.date) {
         return false;
       }
@@ -61,32 +59,33 @@ class Vk {
   }
 
   static async postAdsTask(vk: VK) {
+    const groupId = appConfig.groupId;
+
     try {
-      const groupId = appConfig.groupId;
+      const posts = await Vk.getGoodPosts(vk, groupId);
 
-      try {
-        const posts = await Vk.getGoodPosts(vk, groupId);
+      const post = posts[0];
 
-        const post = posts[0];
+      const text = appConfig.text;
 
-        const text = appConfig.text;
-        const link = appConfig.link;
-
-        if (!post) {
-          return;
-        }
-
-        await vk.api.wall.post({
-          owner_id: -Math.abs(groupId),
-          message: text,
-          attachments: link,
-          from_group: true,
-        });
-      } catch (e) {
-        console.log(groupId, e);
+      if (!post) {
+        return;
       }
+
+      const file = await vk.upload.wallPhoto({
+        source: {
+          value: path.resolve(__dirname, "../photos/attachment.jpg"),
+        },
+      });
+
+      await vk.api.wall.post({
+        owner_id: -Math.abs(groupId),
+        message: text,
+        attachments: file.toString(),
+        from_group: true,
+      });
     } catch (e) {
-      console.log(e);
+      console.log(groupId, e);
     }
   }
 
