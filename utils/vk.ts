@@ -72,16 +72,16 @@ class Vk {
         return;
       }
 
-      const file = await vk.upload.wallPhoto({
-        source: {
-          value: path.resolve(__dirname, "../photos/attachment.jpg"),
-        },
-      });
+      // const file = await vk.upload.wallPhoto({
+      //   source: {
+      //     value: path.resolve(__dirname, "../photos/attachment.jpg"),
+      //   },
+      // });
 
       await vk.api.wall.post({
         owner_id: -Math.abs(groupId),
         message: text,
-        attachments: file.toString(),
+        // attachments: file.toString(),
         from_group: true,
       });
     } catch (e) {
